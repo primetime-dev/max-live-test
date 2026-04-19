@@ -1,0 +1,21 @@
+name: Deploy Image
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-deploy:
+    uses: primetime-dev/.github/.github/workflows/docker-build-deploy.yml@main
+    with:
+      image-name: max-live-test
+      release-name: max-live-test
+      namespace: demo-services
+      values-file: deploy/values.yaml
+    secrets:
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
